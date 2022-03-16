@@ -1,0 +1,159 @@
+﻿@{
+    Layout = null;
+}
+
+@model List<User>
+@{
+    User userTemplate = new User();
+    int Id = userTemplate.Id;
+    string FirstName = userTemplate.FirstName;
+    string LastName = userTemplate.LastName;
+    string Email = userTemplate.Email;
+    string Rol = userTemplate.Rol;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookstore</title>
+     @await Html.PartialAsync("_Favicons")
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookstoreClient.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+</head>
+<body style="background-color: #f4f3f0;">
+    <main>
+
+        <div class="table-responsive" style="width:90vw; margin: 2rem auto 1rem auto">
+            <button class="btnCustom btnGoBack" style="margin-bottom: 0.5rem;"
+                    onclick="location.href='@Url.Action("Books", "Admin")'">
+                Go to books dashboard
+            </button>
+            <button class="btnCustom btnLogout"
+                    onclick="location.href='@Url.Action("LogOut", "User")'" style="margin-bottom: 0.5rem;">
+                Logout
+            </button>
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var user in Model)
+                        {
+
+                            <tr>
+                                <td>@user.Email</td>
+                                <td>@user.FirstName</td>
+                                <td>@user.Rol</td>
+                                <td>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateModal_@user.Id" class="btnCustom btnReadMore">Update</button>
+                                    <button class="btnCustom btnDelete"
+                                    type="button" data-bs-toggle="modal" data-bs-target="#modalDeleteUser_@user.Id">
+                                        Delete
+                                    </button>
+                                </td>
+
+                                <div class="modal fade" id="updateModal_@user.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="color:white;">
+                                        <div class="modal-content" style="background-color: #222523;">
+                                            <div class="modal-header" style="border:none;">
+                                                <h5 class="modal-title" id="exampleModalLabel">Update user</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" asp-action="UpdateUser">
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Id: @user.Id</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@user.Id" asp-for="@Id" class="form-control d-none" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="FirstName" class="form-label">First Name</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@user.FirstName" required asp-for="@FirstName" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="LastName" class="form-label">Last Name</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@user.LastName" required asp-for="@LastName" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Email" class="form-label">Email</label>
+                                                        <input style="border:none; box-shadow:none;" type="email" value="@user.Email" required asp-for="@Email" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Rol" class="form-label">Rol</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@user.Rol" required asp-for="@Rol" class="form-control" />
+                                                    </div>
+                                                    <button type="submit" class="btnCustom btnReadMore">Save changes</button>
+                                                    <button type="button" class="btnCustom btnDelete" data-bs-dismiss="modal">Close</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal" id="modalDeleteUser_@user.Id">
+                                    <div class="modal-dialog" style="color:white;">
+                                        <div class="modal-content" style="background-color: #222523;">
+                                            <div class="modal-header" style="border:none;">
+                                                <h5 class="modal-title">Are you sure you want to delete this user?</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <button type="button" class="btnCustom btnDelete"
+                                                onclick="location.href='@Url.Action("DeleteUser", "Admin", new {Id = @user.Id})'">
+                                                    Yes
+                                                </button>
+                                                <button type="button" class="btnCustom btnCancel" data-bs-dismiss="modal">No</button>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No users found</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,9 @@
+﻿.btnGoBack {
+    background-color: #C9A55F;
+    color: white;
+}
+
+.btnGoBack:hover {
+    background-color: #c99c5f;
+    color:black;
+}

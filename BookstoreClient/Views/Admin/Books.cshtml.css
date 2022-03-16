@@ -1,0 +1,40 @@
+﻿th {
+    text-align: center;
+}
+
+.btnAddBook {
+    background-color: #2C5E90;
+    color: white;
+}
+    .btnAddBook:hover {
+        background-color: #2c5690;
+        color: black;
+    }
+
+.btnGoBack {
+    background-color: #C9A55F;
+    color: white;
+}
+
+    .btnGoBack:hover {
+        background-color: #c99c5f;
+        color: black;
+    }
+
+.btnCancel {
+    background-color: #F4F4F1;
+    color: black;
+}
+
+    .btnCancel:hover {
+        background-color: #e9e7e3;
+    }
+
+.btnLogout {
+    background-color: #4C5152;
+    color: white;
+}
+
+    .btnLogout:hover {
+        background-color: #656b6c;
+    }

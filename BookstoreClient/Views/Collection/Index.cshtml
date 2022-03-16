@@ -1,0 +1,67 @@
+﻿@{
+    var userName = Context.Session.GetString("FirstName");
+    Collection addCollection = new Collection();
+    string collectionName = addCollection.Name;
+}
+
+@model List<string>
+
+<div class="overflow-auto" style="margin: auto 0; padding-bottom: 2rem;">
+    <h1 style="margin: 15px 0px 0px 20px;">@userName`s Collections</h1>
+
+    <br />
+    <div class="container">
+        <div class="row  g-4">
+
+
+            @foreach (var collection in Model)
+            {
+                <a class="col-md-4 col-sm-6 col-lg-3 text-decoration-none text-black" asp-route-collectionName="@collection" asp-controller="Collection" asp-action="BooksFromCollection">
+
+                    <div class="card w-100 h-100 collectionCard" >
+                        <div class="card-body" style="text-align: center;">
+                            <p class="card-text" style="margin: 1rem 0; font-weight:500;">@collection</p>
+                        </div>
+                    </div>
+                </a>
+            }
+
+
+            <button class="col-md-4 col-sm-6 col-lg-3 text-decoration-none text-black btnCustom ModalAddCollection" style="padding:0; border:none; background-color:transparent" 
+                data-bs-toggle="modal" data-bs-target="#modalCollection">
+
+                <div class="card w-100 h-100" style="margin: 0 auto; border:none; ">
+                    <div class="card-body" style="text-align: center;">
+                        <p class="card-text" style="margin: 1rem 0;">Add new collection</p>
+                    </div>
+                </div>
+            </button>
+
+      
+
+
+            <div class="modal" id="modalCollection">
+                <div class="modal-dialog" style="color:white;">
+                    <div class="modal-content" style="background-color: #222523;">
+                        <div class="modal-header" style="border:none;">
+                            <h5 class="modal-title">Add new collection</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" asp-action="AddCollection">
+                                <div class="mb-3">
+                                    <label for="Name" class="form-label">Collection Name</label>
+                                    <input type="text" required asp-for="@collectionName" class="form-control" style="border:none; box-shadow:none;"/>
+                                </div>
+                                <button type="submit" class="btnCustom btnAddCollection">Add collection</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

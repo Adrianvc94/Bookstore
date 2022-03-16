@@ -1,0 +1,24 @@
+﻿.ModalAddCollection > div:hover {
+    background-color: #58A59B;
+    color: white;
+}
+
+.btnAddCollection {
+    background-color: #B8B2A1;
+    color: white;
+}
+
+    .btnAddCollection:hover {
+        background-color: #938e80;
+    }
+
+.collectionCard {
+    margin: 0 auto;
+    border: none;
+    background-color: #cdc9bd;
+    color: white;
+}
+
+    .collectionCard:hover {
+        background-color: #b8b4aa;
+    }

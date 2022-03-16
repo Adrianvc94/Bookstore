@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+}
+@model RegistrationRequest
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookstore</title>
+     @await Html.PartialAsync("_Favicons")
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookstoreClient.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+</head>
+<body style="background-color: #dbd8d0;">
+    <main class="vh-100 vw-100 d-flex justify-content-center align-items-center">
+
+
+        <div class="card rounded-3 text-black p-sm-5 p-3" style="background-color:#222523; border:none;">
+            <div>
+                <h1 class="card-title" style="color:white;">Create new account</h1>
+            </div>
+
+
+            <form method="post" asp-action="OnSignIn">
+                <div class="mb-3">
+                    <label style="color:white;" for="FirstName" class="form-label">First Name</label>
+                    <input asp-for="FirstName" required type="text" class="form-control" style="border:none; box-shadow:none;" />
+                </div>
+
+                <div class="mb-3">
+                    <label style="color:white;" for="LastName" class="form-label">Last Name</label>
+                    <input type="text" required asp-for="LastName" class="form-control" style="border:none; box-shadow:none;"/>
+                </div>
+
+                <div class="mb-3">
+                    <label style="color:white;" for="Email" class="form-label">Email</label>
+                    <input type="email" required asp-for="Email" class="form-control" style="border:none; box-shadow:none;"/>
+                </div>
+                <div class="mb-3">
+                    <label style="color:white;" for="Password" class="form-label">Password</label>
+                    <input type="password" required asp-for="Password" class="form-control" style="border:none; box-shadow:none;"/>
+                </div>
+                <label style="@ViewBag.labelVisbility margin-bottom: 15px; color: #B35D3B; font-weight: bold;">@ViewBag.labelText</label>
+                <button type="submit" class="btnCustom btnReadMore">Create account</button>
+                 <button type="button" class="btnCustom btnGoBack"
+                    onclick="location.href='@Url.Action("Index", "Book")'">
+                    Go back
+                </button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

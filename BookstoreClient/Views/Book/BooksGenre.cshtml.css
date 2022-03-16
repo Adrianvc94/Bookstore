@@ -1,0 +1,39 @@
+﻿.btn-container {
+    visibility: hidden;
+    text-align: center;
+    width: 110px;
+    margin: 0 auto;
+    z-index: 9;
+    position: relative;
+    bottom: 70%;
+}
+
+#books:hover {
+    cursor: pointer;
+}
+
+    #books:hover div:nth-child(1) {
+        filter: brightness(0.9);
+    }
+
+    #books:hover .btn-container {
+        cursor: pointer;
+        visibility: visible;
+    }
+
+.collectionCard {
+    margin: 0 auto;
+    border: none;
+    background-color: #cdc9bd;
+    color: white;
+}
+
+    .collectionCard:hover {
+        background-color: #b8b4aa;
+    }
+
+@media (min-width: 576px) {
+    .cards-width {
+        width: 75% !important;
+    }
+}

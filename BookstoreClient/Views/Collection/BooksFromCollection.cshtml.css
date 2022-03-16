@@ -1,0 +1,31 @@
+﻿#books:hover {
+    cursor: pointer;
+}
+
+    #books:hover div:nth-child(1) {
+        filter: brightness(0.9);
+    }
+
+    #books:hover .btn-container {
+        cursor: pointer;
+        visibility: visible;
+    }
+
+.btnDeleteCollection {
+    background-color: transparent;
+}
+
+    .btnDeleteCollection i {
+        color: #B35D3B;
+        font-size: 2rem
+    }
+
+    .btnDeleteCollection:hover i {
+        color: #a15335;
+    }
+
+@media (min-width: 576px) {
+    .cards-width {
+        width: 75% !important;
+    }
+}

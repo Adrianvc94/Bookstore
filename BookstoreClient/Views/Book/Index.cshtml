@@ -1,0 +1,172 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    string? user = "User";
+    string WithUser = "";
+    if (!String.IsNullOrEmpty(Context.Session.GetString("FirstName")))
+    {
+        user = Context.Session.GetString("FirstName");
+        WithUser = "display: inline-block";
+    }
+    else
+    {
+        WithUser = "display: none";
+    }
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int currentMinusTwo = 0;
+    int currentMinusOne = 0;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int currentPlusOne = 0;
+    int currentPlusTwo = 0;
+
+    currentMinusTwo = currentPage - 2;
+    currentMinusOne = currentPage - 1;
+    currentPlusTwo = currentPage + 2;
+    currentPlusOne = currentPage + 1;
+}
+
+@model List<Book>
+
+<div class="overflow-auto">
+    <h1 style="margin: 40px;">Bookstore</h1>
+
+    <br />
+
+    <div class="container">
+        <div class="row g-4">
+
+            @foreach (var book in Model)
+            {
+                <div class="col-md-4 col-sm-6 col-lg-3" id="books">
+
+                    <div class="h-100">
+                        <div class="card w-100 h-100" style="margin: 0 auto; border:none; background-color:transparent; ">
+                            <img src="@book.Thumbnail" style="margin: 0 auto; width: 60%" class="card-img-top w-80 cards-width" alt="Book cover page">
+                            <div class="card-body cards-width" style="width: 60%; margin: 0 auto; padding: 1rem 0 0 0;">
+                                <p class="card-text">@book.Titles</p>
+                                <p class="card-text">@book.Authors</p>
+                                <p class="card-text"><small class="text-muted">@book.PublishedDate</small></p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button style="@WithUser" class="btnCustom" data-bs-toggle="modal" data-bs-target="#add_@book.Id">
+                            <i class="bi bi-bookmark-plus-fill" style="color:#B35D3B;"></i>
+                        </button>
+                        <button class="btnCustom" data-bs-toggle="modal" data-bs-target="#modal_@book.Id">
+                            <i class="bi bi-book-half" style="color:#4f948b"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal" id="add_@book.Id">
+                    <div class="modal-dialog" style="color:white;">
+                        <div class="modal-content" style="background-color: #222523;">
+                            <div class="modal-header" style="border:none;">
+                                <h5 class="modal-title">Add book to collection</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                @if (ViewBag.CollectionsNames != null)
+                                {
+                                    @if (ViewBag.CollectionsNames.Count > 0)
+                                    {
+                                        @foreach (string collection in ViewBag.CollectionsNames)
+                                        {
+                                            <div class="container m-1">
+                                                <button type="submit" class="btnCustom" style="border:none; background-color:transparent;" id="@collection"
+                                        onclick="location.href='@Url.Action("AddToCollection", "Collection", new {collectionName = collection, bookId = @book.Id})'">
+                                                    <i class="bi bi-plus-circle-fill" style="font-size: 1.5rem; color: #d4d0c6;"></i>
+                                                </button>
+                                                <label class="form-check-label" for="@collection">
+                                                    @collection
+                                                </label>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>You don't have collections.</p>
+                                    }
+                                }
+                            </div>
+                    </div>
+                    </div>
+                </div>
+
+
+                <div id="modal_@book.Id" class="modal" style="margin: 0; padding: 0;">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable h-100 " style="color:white; margin: 0 0px 0 auto;">
+                        <div class="modal-content h-100 rounded-0" style="background-color: #222523;">
+                            <div class="modal-header" style="padding-top: 1.5rem ;">
+                                <h6 style="margin:0">@book.Authors</h6>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="padding: 1rem 2rem; text-align: justify;">
+                                <div style="text-align: center; padding: 1rem 1rem;">
+                                    <h4 class="modal-title">@book.Titles</h4>
+                                    <p class="small pt-2"><i class="bi bi-clock" style="font-size: 1rem; color: lightgrey;"></i> @book.PublishedDate</p>
+
+                                </div>
+                                <h6>Prologue</h6>
+                                <p>@book.Description</p>
+                            </div>
+                            <div class="modal-footer" style="padding: 1rem 2rem;">
+                                <a href="@book.InfoLink" target="_blank" type="button" class="btnCustom flex-grow-1 btnReadMore"
+                               style="">Read more...</a>
+                                <button style="@WithUser" class="btnCustom flex-grow-1 btnWishlist"
+                                    onclick="location.href='@Url.Action("AddToWishlist", "Wishlist", new {bookId = @book.Id})'">
+                                    <i class="bi bi-bookmark-plus-fill"></i> Add to wishlist
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+        @if (ViewBag.TotalPages is not null && ViewBag.CurrentPage is not null)
+        {
+            <div class="btnPagination_container">
+                @if (currentMinusTwo > 0)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = @currentMinusTwo})'">
+                        @currentMinusTwo
+                    </button>
+                }
+
+                @if (currentMinusOne > 0)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = @currentMinusOne})'">
+                        @currentMinusOne
+                    </button>
+                }
+
+                <button class="btnCustom" style="background-color:#938e80;">@ViewBag.CurrentPage</button>
+
+                @if (currentPlusOne <= totalPages)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = @currentPlusOne})'">
+                        @currentPlusOne
+                    </button>
+                }
+                @if (currentPlusTwo <= totalPages)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = @currentPlusTwo})'">
+                        @currentPlusTwo
+                    </button>
+                }
+            </div>
+        }
+
+
+
+    </div>
+
+</div>
+

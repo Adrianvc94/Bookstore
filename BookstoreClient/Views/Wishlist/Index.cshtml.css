@@ -1,0 +1,18 @@
+﻿#books:hover {
+    cursor: pointer;
+}
+
+    #books:hover div:nth-child(1) {
+        filter: brightness(0.9);
+    }
+
+    #books:hover .btn-container {
+        cursor: pointer;
+        visibility: visible;
+    }
+
+@media (min-width: 576px) {
+    .cards-width {
+        width: 75% !important;
+    }
+}

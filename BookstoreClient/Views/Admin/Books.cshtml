@@ -1,0 +1,301 @@
+﻿@{
+    Layout = null;
+
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int currentMinusTwo = 0;
+    int currentMinusOne = 0;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int currentPlusOne = 0;
+    int currentPlusTwo = 0;
+
+    currentMinusTwo = currentPage - 2;
+    currentMinusOne = currentPage - 1;
+    currentPlusTwo = currentPage + 2;
+    currentPlusOne = currentPage + 1;
+}
+
+@model List<Book>
+@{
+    Book bookTemplate = new Book();
+    int Id = bookTemplate.Id;
+    string Title = bookTemplate.Titles;
+    string Authors = bookTemplate.Authors;
+    string Genre = bookTemplate.Genre;
+    string PublishedDate = bookTemplate.PublishedDate;
+    string SmallThumbnail = bookTemplate.SmallThumbnail;
+    string Thumbnail = bookTemplate.Thumbnail;
+    string InfoLink = bookTemplate.InfoLink;
+    string Description = bookTemplate.Description;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookstore</title>
+     @await Html.PartialAsync("_Favicons")
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookstoreClient.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <main>
+
+        <div class="table-responsive" style="width:90vw; margin: 2rem auto 1rem auto">
+            <button class="btnCustom btnGoBack"
+                    onclick="location.href='@Url.Action("Users", "Admin")'" style="margin-bottom: 0.5rem;">
+                Go to users dashboard
+            </button>
+            <button class="btnCustom btnAddBook" data-bs-toggle="modal" data-bs-target="#AddBook" style="margin-bottom: 0.5rem;">
+                Add Book
+            </button>
+            <button class="btnCustom btnLogout"
+                    onclick="location.href='@Url.Action("LogOut", "User")'" style="margin-bottom: 0.5rem;">
+                Logout
+            </button>
+
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Genre</th>
+                        <th scope="col">Published Date</th>
+                        <th scope="col">Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var book in Model)
+                        {
+
+                            <tr>
+                                <td style="max-width: 500px;">@book.Titles</td>
+                                <td style="max-width:300px;">@book.Authors</td>
+                                <td>@book.Genre</td>
+                                <td style="min-width: 170px; text-align:center;">@book.PublishedDate</td>
+                                <td style="min-width: 170px;">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateModal_@book.Id"
+                                    class="btnCustom btnReadMore">
+                                        Update
+                                    </button>
+
+                                    <button class="btnCustom btnDelete" data-bs-toggle="modal" data-bs-target="#modalDeleteBook_@book.Id">
+                                        Delete
+                                    </button>
+                                </td>
+
+                                <div class="modal fade" id="updateModal_@book.Id" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
+                                    <div class="modal-dialog" style="color:white;">
+                                        <div class="modal-content" style="background-color: #222523;">
+                                            <div class="modal-header" style="border:none;">
+                                                <h5 class="modal-title" id="exampleModalLabel">Update book</h5>
+                                                <button type="button" class="btn-close  btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" asp-action="UpdateBook">
+
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Id: @book.Id</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.Id" asp-for="@Id" class="form-control d-none" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Title" class="form-label">Title</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.Titles" required asp-for="@Title" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Authors" class="form-label">Authors</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.Authors" required asp-for="@Authors" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Genre" class="form-label">Genre</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.Genre" required asp-for="@Genre" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="PublisedDate" class="form-label">Publised Date</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.PublishedDate" required asp-for="@PublishedDate" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="SmallThumbnail" class="form-label">Small Thumbnail</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.SmallThumbnail" required asp-for="@SmallThumbnail" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Thumbnail" class="form-label">Thumbnail</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.Thumbnail" required asp-for="@Thumbnail" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="InfoLink" class="form-label">Info Link</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.InfoLink" required asp-for="@InfoLink" class="form-control" />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="Description" class="form-label">Description</label>
+                                                        <input style="border:none; box-shadow:none;" type="text" value="@book.Description" required asp-for="@Description" class="form-control" />
+                                                    </div>
+
+                                                    <button type="submit" class="btnCustom btnReadMore">Save changes</button>
+                                                    <button type="button" class="btnCustom btnDelete" data-bs-dismiss="modal">Close</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal" id="modalDeleteBook_@book.Id">
+                                    <div class="modal-dialog" style="color:white;">
+                                        <div class="modal-content" style="background-color: #222523;">
+                                            <div class="modal-header" style="border:none;">
+                                                <h5 class="modal-title">Are you sure you want to delete this book?</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <button type="button" class="btnCustom btnDelete"
+                                                onclick="location.href='@Url.Action("DeleteBook", "Admin", new {Id = @book.Id})'">
+                                                    Yes
+                                                </button>
+                                                <button type="button" class="btnCustom btnCancel" data-bs-dismiss="modal">No</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No books found</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="AddBook" tabindex="-1" aria-labelledby="AddBook" aria-hidden="true">
+            <div class="modal-dialog" style="color:white;">
+                <div class="modal-content" style="background-color: #222523;">
+                    <div class="modal-header" style="border:none;">
+                        <h5 class="modal-title" id="exampleModalLabel">Add book</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" asp-action="AddBook">
+
+                            <div class="mb-3">
+                                <label for="Title" class="form-label">Title</label>
+                                <input type="text" maxlength="100" required asp-for="@Title" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Authors" class="form-label">Authors</label>
+                                <input type="text" maxlength="100" required asp-for="@Authors" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Genre" class="form-label">Genre</label>
+                                <input type="text" maxlength="50" required asp-for="@Genre" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="PublisedDate" class="form-label">Published Date</label>
+                                <input type="text" maxlength="5" required asp-for="@PublishedDate" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="SmallThumbnail" class="form-label">Small Thumbnail</label>
+                                <input type="text" maxlength="200" required asp-for="@SmallThumbnail" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Thumbnail" class="form-label">Thumbnail</label>
+                                <input type="text" maxlength="200" required asp-for="@Thumbnail" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="InfoLink" class="form-label">Info Link</label>
+                                <input type="text" maxlength="200" required asp-for="@InfoLink" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Description" class="form-label">Description</label>
+                                <input type="text" required asp-for="@Description" class="form-control" style="border:none; box-shadow:none;" />
+                            </div>
+
+                            <button type="submit" class="btnCustom btnReadMore">Add</button>
+                            <button type="button" class="btnCustom btnDelete" data-bs-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        @if (ViewBag.TotalPages is not null && ViewBag.CurrentPage is not null)
+        {
+            <div class="btnPagination_container">
+                @if (currentMinusTwo > 0)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Books", "Admin", new {page = @currentMinusTwo})'">
+                        @currentMinusTwo
+                    </button>
+                }
+
+                @if (currentMinusOne > 0)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Books", "Admin", new {page = @currentMinusOne})'">
+                        @currentMinusOne
+                    </button>
+                }
+
+                <button class="btnCustom" style="background-color:#938e80;">@ViewBag.CurrentPage</button>
+
+                @if (currentPlusOne <= totalPages)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Books", "Admin", new {page = @currentPlusOne})'">
+                        @currentPlusOne
+                    </button>
+                }
+                @if (currentPlusTwo <= totalPages)
+                {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Books", "Admin", new {page = @currentPlusTwo})'">
+                        @currentPlusTwo
+                    </button>
+                }
+            </div>
+        }
+
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+
