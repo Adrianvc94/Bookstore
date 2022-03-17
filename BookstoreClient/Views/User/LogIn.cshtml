@@ -12,7 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bookstore</title>
-     @await Html.PartialAsync("_Favicons")
+    @await Html.PartialAsync("_Favicons")
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BookstoreClient.styles.css" asp-append-version="true" />
@@ -23,7 +23,7 @@
     <main class="vh-100 vw-100 d-flex justify-content-center align-items-center">
 
 
-        <div class="card rounded-3 text-black p-sm-5 p-3"  style="background-color:#222523; border:none;">
+        <div class="card rounded-3 text-black p-sm-5 p-3" style="background-color:#222523; border:none;">
             <div>
                 <h1 class="card-title" style="color:white;">Create new account</h1>
             </div>
@@ -32,19 +32,30 @@
             <form method="post" asp-action="OnLogIn">
                 <div class="mb-3">
                     <label style="color:white;" for="Email" class="form-label">Email</label>
-                    <input type="email" required asp-for="Email" class="form-control" style="border:none; box-shadow:none;"/>
+                    <input type="email" required asp-for="Email" class="form-control" style="border:none; box-shadow:none;" />
                 </div>
                 <div class="mb-3">
                     <label style="color:white;" for="Password" class="form-label">Password</label>
-                    <input type="password" required asp-for="Password" class="form-control" style="border:none; box-shadow:none;"/>
+                    <input type="password" required asp-for="Password" class="form-control" style="border:none; box-shadow:none;" />
                 </div>
                 <label style="@ViewBag.labelVisbility margin-bottom: 15px; color: #B35D3B; font-weight: bold;">@ViewBag.labelText</label>
                 <button type="submit" class="btnCustom btnReadMore">Login</button>
                 <button type="button" class="btnCustom btnGoBack"
-                    onclick="location.href='@Url.Action("Index", "Book")'">
+                        onclick="location.href='@Url.Action("Index", "Book")'">
                     Go back
                 </button>
             </form>
+            <div style="margin-top:15px">
+                <button type="button" class="btnCustom btnLogInUser" style="margin-top:15px"
+                        onclick="location.href='@Url.Action("OnLogIn", "User", new {Email = "prueba@gmail.com", Password = "123"})'">
+                    Login as normal User Account
+                </button>
+                <button type="button" class="btnCustom btnLogInAdmin" style="margin-top:15px"
+                        onclick="location.href='@Url.Action("OnLogIn", "User", new {Email = "test@gmail.com", Password = "12345"})'">
+                    Login as Admin Account
+                </button>
+            </div>
+
         </div>
     </main>
 </body>

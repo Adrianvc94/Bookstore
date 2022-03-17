@@ -7,3 +7,23 @@
     background-color: #c99c5f;
     color:black;
 }
+
+.btnLogInUser {
+    background-color: #2C5E90;
+    color: white;
+}
+
+    .btnLogInUser:hover {
+        background-color: #2C5E90;
+        color: black;
+    }
+
+.btnLogInAdmin {
+    background-color: #B35D3B;
+    color: white;
+}
+
+    .btnLogInAdmin:hover {
+        background-color: #B35D3B;
+        color: black;
+    }
