@@ -9,9 +9,9 @@ namespace BookstoreClient.Controllers
     public class BookController : Controller
     {
 
-        private string UrlBook = "https://localhost:7219/api/Books/page/";
-        private string UrlGenre = "https://localhost:7219/api/Genre/";
-        string UrlCollections = "https://localhost:7219/api/Collections/";
+        private string UrlBook = "http://bookstoreapi.eastus.azurecontainer.io/api/Books/page/";
+        private string UrlGenre = "http://bookstoreapi.eastus.azurecontainer.io/api/Genre/";
+        string UrlCollections = "http://bookstoreapi.eastus.azurecontainer.io/api/Collections/";
 
         public async Task<IActionResult> Index(int? page)
         {

@@ -9,7 +9,7 @@ namespace BookstoreClient.Controllers
 {
     public class CollectionController : Controller
     {
-        string UrlGetCollections = "https://localhost:7219/api/Collections/";
+        string UrlGetCollections = "http://bookstoreapi.eastus.azurecontainer.io/api/Collections/";
 
         public async Task<IActionResult> Index()
         {

@@ -94,7 +94,7 @@
                                     }
                                 }
                             </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
 
@@ -135,6 +135,9 @@
             <div class="btnPagination_container">
                 @if (currentMinusTwo > 0)
                 {
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = 1})'">
+                        First
+                    </button>
                     <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = @currentMinusTwo})'">
                         @currentMinusTwo
                     </button>
@@ -159,6 +162,9 @@
                 {
                     <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = @currentPlusTwo})'">
                         @currentPlusTwo
+                    </button>
+                    <button class="btnCustom" onclick="location.href='@Url.Action("Index", "Book", new {page = totalPages})'">
+                        Last
                     </button>
                 }
             </div>

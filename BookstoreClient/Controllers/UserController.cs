@@ -8,8 +8,8 @@ namespace BookstoreClient.Controllers
     public class UserController : Controller
     {
 
-        string UrlLogin = "https://localhost:7219/api/Users/login/";
-        string UrlSignin = "https://localhost:7219/api/Users/signin/";
+        string UrlLogin = "http://bookstoreapi.eastus.azurecontainer.io/api/Users/login/";
+        string UrlSignin = "http://bookstoreapi.eastus.azurecontainer.io/api/Users/signin/";
 
         public IActionResult SignIn()
         {

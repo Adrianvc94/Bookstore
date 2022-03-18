@@ -9,9 +9,9 @@ namespace BookstoreClient.Controllers
     public class AdminController : Controller
     {
 
-        private string UrlUsers = "https://localhost:7219/api/Users/";
-        private string UrlGetBooks = "https://localhost:7219/api/Books/page/";
-        private string UrlBaseBooks = "https://localhost:7219/api/Books/";
+        private string UrlUsers = "http://bookstoreapi.eastus.azurecontainer.io/api/Users/";
+        private string UrlGetBooks = "http://bookstoreapi.eastus.azurecontainer.io/api/Books/page/";
+        private string UrlBaseBooks = "http://bookstoreapi.eastus.azurecontainer.io/api/Books/";
 
 
 

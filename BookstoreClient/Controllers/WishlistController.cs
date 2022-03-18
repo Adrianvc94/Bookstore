@@ -10,7 +10,7 @@ namespace BookstoreClient.Controllers
     public class WishlistController : Controller
     {
 
-        string UrlWishlist = "https://localhost:7219/api/Wishlists/";
+        string UrlWishlist = "http://bookstoreapi.eastus.azurecontainer.io/api/Wishlists/";
 
         private HttpClient GetClient(string token)
         {
